@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class MainManager : MonoBehaviour
 {
+
+   
+
     public Brick BrickPrefab;
     public int LineCount = 6;
     public Rigidbody Ball;
@@ -14,14 +17,26 @@ public class MainManager : MonoBehaviour
     public GameObject GameOverText;
     
     private bool m_Started = false;
-    private int m_Points;
+    public int m_Points;
     
     private bool m_GameOver = false;
+    public Text ScoreText1;
+
+    public int highScore;
+    
+ 
+    
 
     
     // Start is called before the first frame update
     void Start()
     {
+        highScore = GameHandler.Instance.highestScore;
+
+        NameReference();
+
+
+
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -40,6 +55,10 @@ public class MainManager : MonoBehaviour
 
     private void Update()
     {
+
+
+        
+
         if (!m_Started)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -55,6 +74,13 @@ public class MainManager : MonoBehaviour
         }
         else if (m_GameOver)
         {
+            UpdateHighScore();
+            NameReference();
+
+            GameHandler.Instance.SaveHighestScore();
+            
+
+
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -73,4 +99,32 @@ public class MainManager : MonoBehaviour
         m_GameOver = true;
         GameOverText.SetActive(true);
     }
+
+   public void NameReference()
+    {
+      ScoreText1.text = GameHandler.Instance.myText + ": Highscore: " + GameHandler.Instance.highestScore;
+    }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+   
+    public void UpdateHighScore()
+    {
+        
+        if(m_Points < highScore)
+        {
+            return;
+
+        } else if(m_Points > highScore)
+        {
+            highScore = m_Points;
+        }
+
+         GameHandler.Instance.highestScore = highScore;
+
+    }
+    
 }
