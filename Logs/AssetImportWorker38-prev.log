@@ -1,0 +1,21 @@
+Using pre-set license
+Built from '2020.3/release' branch; Version is '2020.3.12f1 (b3b2c6512326) revision 11776710'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Pro; OS build 19042.1165; Version 2009; 64bit' Language: 'en' Physical Memory: 3998 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2020.3.12f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker38
+-projectPath
+C:/Users/pc/OneDrive/Desktop/Game Dev/GitHub/Implementing-data-between-Scenes-and-Sessions
+-logFile
+Logs/AssetImportWorker38.log
+-srvPort
+53161
+Successfully changed project path to: C:/Users/pc/OneDrive/Desktop/Game Dev/GitHub/Implementing-data-between-Scenes-and-Sessions
+C:/Users/pc/OneDrive/Desktop/Game Dev/GitHub/Implementing-data-between-Scenes-and-Sessions
+Using Asset Import Pipeline V2.

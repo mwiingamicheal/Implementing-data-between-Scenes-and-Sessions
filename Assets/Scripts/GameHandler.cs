@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
 using UnityEngine.UI;
+
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -46,7 +48,7 @@ public class GameHandler : MonoBehaviour
 
     public void ExitGame()
     {
-        SaveHighestScore();
+     
 
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
@@ -65,13 +67,15 @@ public class GameHandler : MonoBehaviour
     {
         
         LoadHighestScore();
+        LoadRecordBreaker();
+
+        UpdateHighScore();
     }
 
     private void LateUpdate()
     {
         UpdateName();
-        UpdateHighScore();
-        
+ 
     }
 
     public void UpdateName()
@@ -82,13 +86,14 @@ public class GameHandler : MonoBehaviour
 
     public void UpdateHighScore()
     {
-        highScores.text = "HighScore: " + highestScore;
+        highScores.text = "HighScore: " + myText + " - " + highestScore;
     }
 
     [System.Serializable]
     class SaveData
     {
         public int highestScore;
+        public string myText;
     }
 
     public void SaveHighestScore()
@@ -109,6 +114,27 @@ public class GameHandler : MonoBehaviour
 
             SaveData data = JsonUtility.FromJson<SaveData>(json);
             highestScore = data.highestScore;
+        }
+    }
+
+    public void SaveRecordBreaker()
+    {
+        SaveData data = new SaveData();
+        data.myText = myText;
+
+        string json = JsonUtility.ToJson(data);
+        File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
+    }
+
+    public void LoadRecordBreaker()
+    {
+        string path = Application.persistentDataPath + "/savefile.json";
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+
+            SaveData data = JsonUtility.FromJson<SaveData>(json);
+            myText = data.myText;
         }
     }
 }

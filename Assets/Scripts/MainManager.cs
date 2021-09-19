@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
 
 public class MainManager : MonoBehaviour
 {
@@ -23,14 +24,16 @@ public class MainManager : MonoBehaviour
     public Text ScoreText1;
 
     public int highScore;
-    
- 
-    
+    public bool recordBroken = false;
 
-    
+
+   
+
     // Start is called before the first frame update
     void Start()
     {
+       
+
         highScore = GameHandler.Instance.highestScore;
 
         NameReference();
@@ -56,9 +59,6 @@ public class MainManager : MonoBehaviour
     private void Update()
     {
 
-
-        
-
         if (!m_Started)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -78,7 +78,8 @@ public class MainManager : MonoBehaviour
             NameReference();
 
             GameHandler.Instance.SaveHighestScore();
-            
+
+            GameHandler.Instance.SaveRecordBreaker();
 
 
             if (Input.GetKeyDown(KeyCode.Space))
@@ -116,11 +117,13 @@ public class MainManager : MonoBehaviour
         
         if(m_Points < highScore)
         {
+            recordBroken = false;
             return;
 
         } else if(m_Points > highScore)
         {
             highScore = m_Points;
+            recordBroken = true;
         }
 
          GameHandler.Instance.highestScore = highScore;
