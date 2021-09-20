@@ -32,9 +32,8 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
-
         highScore = GameHandler.Instance.highestScore;
+      
 
         NameReference();
 
@@ -74,12 +73,14 @@ public class MainManager : MonoBehaviour
         }
         else if (m_GameOver)
         {
+
             UpdateHighScore();
+            GameHandler.Instance.UpdateHighScore();
             NameReference();
 
-            GameHandler.Instance.SaveHighestScore();
-
             GameHandler.Instance.SaveRecordBreaker();
+            GameHandler.Instance.SaveHighestScore();
+           
 
 
             if (Input.GetKeyDown(KeyCode.Space))
@@ -109,6 +110,7 @@ public class MainManager : MonoBehaviour
     public void BackToMenu()
     {
         SceneManager.LoadScene(0);
+        GameHandler.Instance.rootCanvas2.SetActive(true);
     }
 
    
@@ -124,9 +126,11 @@ public class MainManager : MonoBehaviour
         {
             highScore = m_Points;
             recordBroken = true;
+
+            GameHandler.Instance.highestScore = highScore;
         }
 
-         GameHandler.Instance.highestScore = highScore;
+         
 
     }
     

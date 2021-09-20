@@ -22,6 +22,9 @@ public class GameHandler : MonoBehaviour
 
     public int highestScore;
     public Text highScores;
+    public GameObject rootCanvas;
+    public bool gameStarted = false;
+    public GameObject rootCanvas2;
 
 
 
@@ -36,20 +39,21 @@ public class GameHandler : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
+        DontDestroyOnLoad(rootCanvas);
+        DontDestroyOnLoad(rootCanvas2);
     }
 
    
-
-
     public void StartGame()
     {
         SceneManager.LoadScene(1);
+        rootCanvas2.SetActive(false);
+       
     }
 
     public void ExitGame()
     {
-     
-
+    
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
 #else
@@ -65,23 +69,24 @@ public class GameHandler : MonoBehaviour
 
     private void Start()
     {
-        
+       
+
         LoadHighestScore();
         LoadRecordBreaker();
 
+
         UpdateHighScore();
+
     }
 
     private void LateUpdate()
     {
-        UpdateName();
- 
+            UpdateName();
     }
 
     public void UpdateName()
     {
         myText = mainInputField.text;
-
     }
 
     public void UpdateHighScore()
@@ -123,12 +128,12 @@ public class GameHandler : MonoBehaviour
         data.myText = myText;
 
         string json = JsonUtility.ToJson(data);
-        File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
+        File.WriteAllText(Application.persistentDataPath + "/savefile.json1", json);
     }
 
     public void LoadRecordBreaker()
     {
-        string path = Application.persistentDataPath + "/savefile.json";
+        string path = Application.persistentDataPath + "/savefile.json1";
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
